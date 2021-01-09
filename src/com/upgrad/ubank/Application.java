@@ -1,5 +1,7 @@
 package com.upgrad.ubank;
 
+import com.upgrad.ubank.dtos.Account;
+import com.upgrad.ubank.dtos.Transaction;
 import com.upgrad.ubank.services.*;
 
 import java.util.Scanner;
@@ -27,9 +29,9 @@ public class Application {
     private void start () {
         boolean flag = true;
 
-        System.out.println("*********************");
-        System.out.println("********U-Bank*******");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("***U-Bank**");
+        System.out.println("*******");
 
         do {
             System.out.println("1. Login");
@@ -68,9 +70,9 @@ public class Application {
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("********Login********");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("***Login***");
+        System.out.println("*******");
 
         Account account = getAccountFromUser();
 
@@ -93,9 +95,9 @@ public class Application {
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("******Register*******");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("***Register**");
+        System.out.println("*******");
 
         Account account = getAccountFromUser();
 
@@ -127,22 +129,22 @@ public class Application {
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("*******Account*******");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("**Account**");
+        System.out.println("*******");
 
         System.out.println("Get the account corresponding to Account No: " + loggedInAccountNo);
     }
 
-    private void deposit () {
+    private void deposit () {   // point 14
         if (!isLoggedIn) {
             System.out.println("You are not logged in.");
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("*******Deposit*******");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("**Deposit**");
+        System.out.println("*******");
 
         System.out.print("Amount: ");
         int amount = Integer.parseInt(scan.nextLine());
@@ -156,9 +158,9 @@ public class Application {
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("******Withdraw*******");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("***Withdraw**");
+        System.out.println("*******");
 
         System.out.print("Amount: ");
         int amount = Integer.parseInt(scan.nextLine());
@@ -171,15 +173,15 @@ public class Application {
         }
     }
 
-    private void getAccountStatement() {
+    private void getAccountStatement() {   // point 15
         if (!isLoggedIn) {
             System.out.println("You are not logged in.");
             return;
         }
 
-        System.out.println("*********************");
-        System.out.println("**Account Statement**");
-        System.out.println("*********************");
+        System.out.println("*******");
+        System.out.println("*Account Statement*");
+        System.out.println("*******");
 
         Transaction[] transactions = transactionService.getTransactions(loggedInAccountNo);
         if (transactions == null) {
@@ -200,8 +202,8 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        AccountService accountService = new AccountServiceImpl();
-        TransactionService transactionService = new TransactionServiceImplMobile();
+        TransactionService transactionService = new TransactionServiceImpl(); // point 3
+        AccountService accountService = new AccountServiceImpl(transactionService);// point 3
         Application application = new Application(accountService, transactionService);
         application.start();
     }
